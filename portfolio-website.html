@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEBエンジニア ポートフォリオ</title>
+    <style>
+      :root {
+        --primary-color: #2a2a72;
+        --secondary-color: #009ffd;
+        --accent-color: #ff7e5f;
+        --text-color: #333;
+        --bg-color: #f9f9f9;
+        --card-color: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      header {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+      }
+
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        z-index: 100;
+        transition: all 0.3s ease;
+        background-color: transparent;
+      }
+
+      .navbar.scrolled {
+        background-color: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem;
+      }
+
+      .navbar.scrolled a {
+        color: var(--text-color);
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent-color);
+      }
+
+      .hero {
+        max-width: 800px;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .cta-btn {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: none;
+        cursor: pointer;
+      }
+
+      .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      section {
+        padding: 5rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 2.5rem;
+        color: var(--primary-color);
+      }
+
+      .about-content {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+      }
+
+      .about-image {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .about-image img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .about-text {
+        flex: 2;
+        min-width: 300px;
+      }
+
+      .skills {
+        margin-top: 2rem;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .skill-tag {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .project-card {
+        background-color: var(--card-color);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .project-img {
+        width: 100%;
+        height: 200px;
+        background-color: #eee;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .project-content {
+        padding: 1.5rem;
+      }
+
+      .project-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+
+      .project-tag {
+        background-color: #f0f0f0;
+        color: var(--text-color);
+        padding: 0.2rem 0.7rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+      }
+
+      .experience-timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .experience-timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background-color: var(--primary-color);
+        transform: translateX(-50%);
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+        width: 50%;
+        padding-right: 2rem;
+      }
+
+      .timeline-item:nth-child(even) {
+        margin-left: auto;
+        padding-right: 0;
+        padding-left: 2rem;
+      }
+
+      .timeline-content {
+        background-color: var(--card-color);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+      }
+
+      .timeline-content::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        width: 20px;
+        height: 20px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content::before {
+        right: -32px;
+      }
+
+      .timeline-item:nth-child(even) .timeline-content::before {
+        left: -32px;
+      }
+
+      .timeline-date {
+        color: var(--secondary-color);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-title {
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+      }
+
+      form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+      }
+
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin: 1.5rem 0;
+      }
+
+      .social-link {
+        color: white;
+        font-size: 1.5rem;
+        transition: color 0.3s;
+      }
+
+      .social-link:hover {
+        color: var(--accent-color);
+      }
+
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .about-content {
+          flex-direction: column;
+        }
+
+        .experience-timeline::before {
+          left: 30px;
+        }
+
+        .timeline-item {
+          width: 100%;
+          padding-right: 0;
+          padding-left: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+          padding-left: 50px;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before,
+        .timeline-item:nth-child(even) .timeline-content::before {
+          left: -38px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <a href="#" class="logo">Kazuho</a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+
+      <div class="hero">
+        <h1>Kazuho</h1>
+        <p>WEBエンジニア / フロントエンドデベロッパー</p>
+        <a href="#contact" class="cta-btn">お問い合わせ</a>
+      </div>
+    </header>
+
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-image">
+          <img src="/api/placeholder/400/400" alt="Profile Photo" />
+        </div>
+        <div class="about-text">
+          <p>
+            ここにあなたの自己紹介を入れます。WEBエンジニアとしての経験や、得意な分野、興味のある技術などについて書くとよいでしょう。また、あなたの強みや、どのような価値を提供できるかについても触れるとよいでしょう。
+          </p>
+          <p>
+            また、これまでの経歴や、どのようなプロジェクトに携わってきたかなど、あなたのバックグラウンドについても書くとよいでしょう。読み手にあなたの人となりが伝わるように、趣味や興味についても少し触れると親しみやすくなります。
+          </p>
+
+          <div class="skills">
+            <h3>Skills</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">Responsive Design</span>
+              <span class="skill-tag">UI/UX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div
+            class="project-img"
+            style="background-image: url('/api/placeholder/400/200')"
+          ></div>
+          <div class="project-content">
+            <h3 class="project-title">プロジェクト1</h3>
+            <p>
+              このプロジェクトの概要や、使用した技術、あなたの役割などについて書きます。どのような課題があり、どのように解決したかなど、技術的な詳細も含めると良いでしょう。
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">TypeScript</span>
+              <span class="project-tag">Tailwind CSS</span>
+            </div>
+            <a href="#" class="cta-btn">詳細を見る</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div
+            class="project-img"
+            style="background-image: url('/api/placeholder/400/200')"
+          ></div>
+          <div class="project-content">
+            <h3 class="project-title">プロジェクト2</h3>
+            <p>
+              このプロジェクトの概要や、使用した技術、あなたの役割などについて書きます。どのような課題があり、どのように解決したかなど、技術的な詳細も含めると良いでしょう。
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Vue.js</span>
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">MongoDB</span>
+            </div>
+            <a href="#" class="cta-btn">詳細を見る</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div
+            class="project-img"
+            style="background-image: url('/api/placeholder/400/200')"
+          ></div>
+          <div class="project-content">
+            <h3 class="project-title">プロジェクト3</h3>
+            <p>
+              このプロジェクトの概要や、使用した技術、あなたの役割などについて書きます。どのような課題があり、どのように解決したかなど、技術的な詳細も含めると良いでしょう。
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">WordPress</span>
+              <span class="project-tag">PHP</span>
+              <span class="project-tag">jQuery</span>
+            </div>
+            <a href="#" class="cta-btn">詳細を見る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2 class="section-title">Experience</h2>
+      <div class="experience-timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">2023 - 現在</div>
+            <h3 class="timeline-title">シニアフロントエンドデベロッパー</h3>
+            <h4>○○株式会社</h4>
+            <p>
+              この会社での役割や担当したプロジェクト、使用した技術などについて書きます。どのような成果を上げたか、どのようなチームで働いたかなども含めると良いでしょう。
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">2020 - 2023</div>
+            <h3 class="timeline-title">WEBエンジニア</h3>
+            <h4>△△株式会社</h4>
+            <p>
+              この会社での役割や担当したプロジェクト、使用した技術などについて書きます。どのような成果を上げたか、どのようなチームで働いたかなども含めると良いでしょう。
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-date">2018 - 2020</div>
+            <h3 class="timeline-title">フロントエンドデベロッパー</h3>
+            <h4>□□株式会社</h4>
+            <p>
+              この会社での役割や担当したプロジェクト、使用した技術などについて書きます。どのような成果を上げたか、どのようなチームで働いたかなども含めると良いでしょう。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <form>
+        <div class="form-group">
+          <input type="text" placeholder="お名前" required />
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="メールアドレス" required />
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="件名" />
+        </div>
+        <div class="form-group">
+          <textarea placeholder="メッセージ" required></textarea>
+        </div>
+        <button type="submit" class="cta-btn">送信する</button>
+      </form>
+    </section>
+
+    <footer>
+      <h3>あなたの名前</h3>
+      <p>WEBエンジニア / フロントエンドデベロッパー</p>
+      <div class="social-links">
+        <a href="#" class="social-link">GitHub</a>
+        <a href="#" class="social-link">LinkedIn</a>
+        <a href="#" class="social-link">Twitter</a>
+      </div>
+      <p>&copy; 2025 あなたの名前. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // ナビゲーションバーのスクロール効果
+      window.addEventListener("scroll", function () {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      // スムーススクロール
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
